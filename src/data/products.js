@@ -1,44 +1,44 @@
 export const productsList = [
   {
     id: 1,
-    name: "Product 1",
-    description: "Description of Product 1",
-    price: 10.0,
-    image: "https://via.placeholder.com/150",
+    name: "Wireless Bluetooth Headphones",
+    description:
+      "High-quality over-ear headphones with noise cancellation and 20 hours of battery life.",
+    price: "59.99",
+    image:
+      "https://i5.walmartimages.com/seo/onn-Wireless-Bluetooth-On-Ear-Headphones-Blue_7d516fbc-1d89-444f-b854-65d821d16580.5738ad8db42d194901077b2b98b20875.jpeg",
   },
   {
     id: 2,
-    name: "Product 2",
-    description: "Description of Product 2",
-    price: 15.0,
-    image: "https://via.placeholder.com/150",
+    name: "Smartphone Stand",
+    description: "Adjustable and portable stand for smartphones and tablets.",
+    price: "14.99",
+    image:
+      "https://www.ido.lk/wp-content/uploads/2021/09/Mobile-Phone-Stand-Desktop-Tablet-Holder-Multi-Angle-Height-Adjustable-Phone-Stand-Sri-Lank-@ido.lk_.jpg",
   },
   {
     id: 3,
-    name: "Product 3",
-    description: "Description of Product 3",
-    price: 20.0,
-    image: "https://via.placeholder.com/150",
+    name: "USB-C Charging Cable",
+    description: "Durable 6ft USB-C cable for fast charging and data transfer.",
+    price: "9.99",
+    image:
+      "https://floatinggrip.com/cdn/shop/files/5713474045402-FLOATINGGRIP-USB-C_USB-C-FG-USBLED-C-C-150-RP-1.png?v=1718047087&width=1500",
   },
   {
     id: 4,
-    name: "Product 1",
-    description: "Description of Product 1",
-    price: 10.0,
-    image: "https://via.placeholder.com/150",
+    name: "LED Desk Lamp",
+    description:
+      "Dimmable LED desk lamp with adjustable brightness and color temperature.",
+    price: "29.99",
+    image: "https://i.ebayimg.com/images/g/4aMAAOSwl4lkG9DC/s-l1200.jpg",
   },
   {
     id: 5,
-    name: "Product 2",
-    description: "Description of Product 2",
-    price: 15.0,
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 6,
-    name: "Product 3",
-    description: "Description of Product 3",
-    price: 20.0,
-    image: "https://via.placeholder.com/150",
+    name: "Gaming Mouse",
+    description:
+      "Ergonomic gaming mouse with customizable RGB lighting and 6 programmable buttons.",
+    price: "39.99",
+    image:
+      "https://media.cablematic.com/__sized__/images_1000/ge10700-01-thumbnail-540x540-70.jpg",
   },
 ];

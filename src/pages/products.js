@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { productsList } from "../data/products";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { useCart } from "../context/cartContext";
+import { Cart } from "react-bootstrap-icons";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -12,43 +13,48 @@ const Products = () => {
   const { addToCart } = useCart();
   console.log(user);
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate("/login");
+  //   }
+  // }, [user, navigate]);
 
   return (
-    <div>
-      <h2>Products</h2>
-      <div className="product-list">
+    <div className="py-3">
+      <h2 className="ps-5 pb-2">Products</h2>
+      <div className="product-list px-5">
         {productsList.length === 0 ? (
           <p>No products available at the moment. Please check back later.</p>
         ) : (
-          <div className="row">
-            {productsList.map((product) => (
-              <div className="col-md-4" key={product.id}>
-                <Card style={{ width: "18rem" }}>
+          <Row xs={1} md={2} lg={4} className="g-4">
+            {productsList.map((product, idx) => (
+              <Col key={idx} className="cardWrapper">
+                <Card className="d-flex flex-column h-100">
                   <Card.Img
                     variant="top"
                     src={product.image}
                     alt={`Image of ${product.name}`}
                   />
-                  <Card.Body>
+                  <Card.Body className="d-flex flex-column">
                     <Card.Title>{product.name}</Card.Title>
-                    <Card.Text>{product.description}</Card.Text>
-                    <Card.Text>${product.price}</Card.Text>
-                    <Button
-                      variant="primary"
-                      onClick={() => addToCart(product)}
-                    >
-                      Add to Cart
-                    </Button>
+                    <Card.Text className="secondartText">
+                      {product.description}
+                    </Card.Text>
+                    <Card.Text>{`$${product.price}`}</Card.Text>
+                    <div className="mt-auto">
+                      <Button
+                        className="btnPrimary d-flex align-items-cente"
+                        onClick={() => addToCart(product)}
+                      >
+                        <Cart size={20} className="me-2" />
+                        Add to Cart
+                      </Button>
+                    </div>
                   </Card.Body>
                 </Card>
-              </div>
+              </Col>
             ))}
-          </div>
+          </Row>
         )}
       </div>
     </div>

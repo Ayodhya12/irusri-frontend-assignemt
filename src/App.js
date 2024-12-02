@@ -8,6 +8,7 @@ import Logout from "./pages/logout";
 import AppNavbar from "./components/navbar";
 import { CartProvider } from "./context/cartContext";
 import RegistrationForm from "./pages/registration";
+import "./styles/styles.css";
 
 function App() {
   return (
