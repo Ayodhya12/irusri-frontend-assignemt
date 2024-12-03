@@ -1,33 +1,57 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
-const AuthContext = createContext();
-
-export const useAuth = () => useContext(AuthContext);
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  const [registeredUsers, setRegisteredUsers] = useState(() => {
+    const users = localStorage.getItem("registeredUsers");
+    return users ? JSON.parse(users) : [];
+  });
+
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedUser = JSON.parse(localStorage.getItem("currentUser"));
     if (storedUser) {
       setUser(storedUser);
     }
   }, []);
 
+  const register = (email, password) => {
+    const isExistingUser = registeredUsers.some((user) => user.email === email);
+
+    if (isExistingUser) {
+      return false;
+    }
+    const newUser = { email, password };
+    const updatedUsers = [...registeredUsers, newUser];
+    setRegisteredUsers(updatedUsers);
+    localStorage.setItem("registeredUsers", JSON.stringify(updatedUsers));
+    return true;
+  };
+
   const login = (email, password) => {
-    const loggedInUser = { email };
-    setUser(loggedInUser);
-    localStorage.setItem("user", JSON.stringify(loggedInUser));
+    const foundUser = registeredUsers.find(
+      (user) => user.email === email && user.password === password
+    );
+    if (foundUser) {
+      setUser(foundUser);
+      localStorage.setItem("currentUser", JSON.stringify(foundUser.email));
+      return true;
+    }
+    return false;
   };
 
   const logout = () => {
+    localStorage.removeItem("currentUser");
     setUser(null);
-    localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, register, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export default AuthProvider;

@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCart } from "../context/cartContext";
 import { Button, Row, Col, Container } from "react-bootstrap";
 import CartItemCard from "../components/cartItemCard";
+import ToastMessage from "../components/appToast";
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity, cartTotal } = useCart();
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
 
-  console.log(cart);
+  const handleRemove = () => {
+    setShowSuccessToast(true);
+    removeFromCart();
+  };
+
   return (
     <Container className="py-3">
       <h2>Shopping Cart</h2>
@@ -33,6 +39,12 @@ const Cart = () => {
           </Row>
         </>
       )}
+      <ToastMessage
+        message="Item removed from cart!"
+        show={showSuccessToast}
+        onClose={() => setShowSuccessToast(false)}
+        type="success"
+      />
     </Container>
   );
 };

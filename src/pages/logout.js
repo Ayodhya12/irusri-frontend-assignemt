@@ -1,15 +1,36 @@
-import React from "react";
-import { useAuth } from "../context/authContext"; // Import useAuth hook
+import React, { useContext } from "react";
+import { AuthContext } from "../context/authContext";
+import { Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-const Logout = () => {
-  const { logout } = useAuth();
+const LogoutModal = ({ show, onClose }) => {
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    onClose();
+    navigate("/login");
+  };
 
   return (
-    <div>
-      <h2>You are logged in. Do you want to log out?</h2>
-      <button onClick={logout}>Logout</button>
-    </div>
+    <>
+      <Modal show={show} onHide={onClose} backdrop="static" keyboard={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Logout</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to log out?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleLogout}>
+            Logout
+          </Button>
+          <Button variant="secondary" onClick={onClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 
-export default Logout;
+export default LogoutModal;

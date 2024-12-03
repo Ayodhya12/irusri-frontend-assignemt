@@ -1,12 +1,32 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
+import { AuthContext } from "./authContext"; // Assuming you have an AuthContext set up
 
 const CartContext = createContext();
 
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
-  const storedCart = JSON.parse(localStorage.getItem("cart"));
-  const [cart, setCart] = useState(storedCart || []);
+  const { user } = useContext(AuthContext);
+  console.log(user);
+  const [userEmail, setUserEmail] = useState(user || "");
+  const [cart, setCart] = useState(() => {
+    const storedCart = localStorage.getItem(`cart_${user}`);
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
+
+  useEffect(() => {
+    if (user) {
+      setUserEmail(user);
+      const storedCart = localStorage.getItem(`cart_${user}`);
+      setCart(storedCart ? JSON.parse(storedCart) : []);
+    }
+  }, [user]);
+
+  const saveCartToStorage = (updatedCart) => {
+    if (userEmail) {
+      localStorage.setItem(`cart_${userEmail}`, JSON.stringify(updatedCart));
+    }
+  };
 
   const addToCart = (product) => {
     setCart((prevCart) => {
@@ -23,7 +43,7 @@ export const CartProvider = ({ children }) => {
         updatedCart = [...prevCart, { ...product, quantity: 1 }];
       }
 
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      saveCartToStorage(updatedCart);
 
       return updatedCart;
     });
@@ -32,7 +52,7 @@ export const CartProvider = ({ children }) => {
   const removeFromCart = (id) => {
     setCart((prevCart) => {
       const updatedCart = prevCart.filter((item) => item.id !== id);
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      saveCartToStorage(updatedCart);
       return updatedCart;
     });
   };
@@ -42,14 +62,16 @@ export const CartProvider = ({ children }) => {
       const updatedCart = prevCart.map((item) =>
         item.id === id ? { ...item, quantity } : item
       );
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      saveCartToStorage(updatedCart);
       return updatedCart;
     });
   };
 
   const clearCart = () => {
     setCart([]);
-    localStorage.removeItem("cart");
+    if (userEmail) {
+      localStorage.removeItem(`cart_${userEmail}`);
+    }
   };
 
   const cartTotal = cart.reduce(
@@ -59,6 +81,7 @@ export const CartProvider = ({ children }) => {
 
   const value = {
     cart,
+    userEmail,
     addToCart,
     removeFromCart,
     updateQuantity,

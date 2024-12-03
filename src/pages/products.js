@@ -1,32 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { productsList } from "../data/products";
-import { Card, Button, Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/authContext";
+import { Card, Button, Row, Col, Container } from "react-bootstrap";
 import { useCart } from "../context/cartContext";
 import { Cart } from "react-bootstrap-icons";
+import ToastMessage from "../components/appToast";
 
 const Products = () => {
-  const navigate = useNavigate();
-
-  const { user } = useAuth();
   const { addToCart } = useCart();
-  console.log(user);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [showErrorToast, setShowErrorToast] = useState(false);
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/login");
-  //   }
-  // }, [user, navigate]);
+  const handleAddToCart = (product) => {
+    try {
+      addToCart(product);
+      setShowSuccessToast(true);
+    } catch (error) {
+      setShowErrorToast(true);
+    }
+  };
 
   return (
-    <div className="py-3">
-      <h2 className="ps-5 pb-2">Products</h2>
-      <div className="product-list px-5">
+    <Container className="py-3">
+      <h2 className="pb-2">Products</h2>
+      <div className="product-list">
         {productsList.length === 0 ? (
           <p>No products available at the moment. Please check back later.</p>
         ) : (
-          <Row xs={1} md={2} lg={4} className="g-4">
+          <Row xs={1} md={2} lg={5} className="g-4">
             {productsList.map((product, idx) => (
               <Col key={idx} className="cardWrapper">
                 <Card className="d-flex flex-column h-100">
@@ -44,7 +44,7 @@ const Products = () => {
                     <div className="mt-auto">
                       <Button
                         className="btnPrimary d-flex align-items-cente"
-                        onClick={() => addToCart(product)}
+                        onClick={() => handleAddToCart(product)}
                       >
                         <Cart size={20} className="me-2" />
                         Add to Cart
@@ -57,7 +57,19 @@ const Products = () => {
           </Row>
         )}
       </div>
-    </div>
+      <ToastMessage
+        message="Product added to cart successfully!"
+        show={showSuccessToast}
+        onClose={() => setShowSuccessToast(false)}
+        type="success"
+      />
+      <ToastMessage
+        message="Failed to add product to cart. Please try again!"
+        show={showErrorToast}
+        onClose={() => setShowErrorToast(false)}
+        type="error"
+      />
+    </Container>
   );
 };
 

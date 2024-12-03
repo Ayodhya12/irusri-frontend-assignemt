@@ -1,10 +1,8 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/home";
 import Products from "./pages/products";
 import Cart from "./pages/cart";
-import Login from "./pages/login";
-import Logout from "./pages/logout";
+import LoginForm from "./pages/login";
 import AppNavbar from "./components/navbar";
 import { CartProvider } from "./context/cartContext";
 import RegistrationForm from "./pages/registration";
@@ -16,12 +14,10 @@ function App() {
       <CartProvider>
         <AppNavbar />
         <Routes>
-          <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
-          <Route path="/logout" element={<Logout />} />
         </Routes>
       </CartProvider>
     </div>
