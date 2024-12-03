@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { AuthContext } from "./authContext"; // Assuming you have an AuthContext set up
+import { AuthContext } from "./authContext";
 
 const CartContext = createContext();
 
@@ -7,24 +7,18 @@ export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
-  console.log(user);
-  const [userEmail, setUserEmail] = useState(user || "");
-  const [cart, setCart] = useState(() => {
-    const storedCart = localStorage.getItem(`cart_${user}`);
-    return storedCart ? JSON.parse(storedCart) : [];
-  });
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    if (user) {
-      setUserEmail(user);
-      const storedCart = localStorage.getItem(`cart_${user}`);
+    if (user !== null) {
+      const storedCart = localStorage.getItem(`cart_${user.email}`);
       setCart(storedCart ? JSON.parse(storedCart) : []);
     }
   }, [user]);
 
   const saveCartToStorage = (updatedCart) => {
-    if (userEmail) {
-      localStorage.setItem(`cart_${userEmail}`, JSON.stringify(updatedCart));
+    if (user) {
+      localStorage.setItem(`cart_${user.email}`, JSON.stringify(updatedCart));
     }
   };
 
@@ -69,8 +63,8 @@ export const CartProvider = ({ children }) => {
 
   const clearCart = () => {
     setCart([]);
-    if (userEmail) {
-      localStorage.removeItem(`cart_${userEmail}`);
+    if (user) {
+      localStorage.removeItem(`cart_${user.email}`);
     }
   };
 
@@ -81,7 +75,6 @@ export const CartProvider = ({ children }) => {
 
   const value = {
     cart,
-    userEmail,
     addToCart,
     removeFromCart,
     updateQuantity,

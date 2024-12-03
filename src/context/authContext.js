@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
     );
     if (foundUser) {
       setUser(foundUser);
-      localStorage.setItem("currentUser", JSON.stringify(foundUser.email));
+      localStorage.setItem("currentUser", JSON.stringify(foundUser));
       return true;
     }
     return false;
