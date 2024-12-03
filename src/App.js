@@ -1,5 +1,4 @@
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Products from "./pages/products";
 import Cart from "./pages/cart";
 import LoginForm from "./pages/login";
@@ -14,6 +13,7 @@ function App() {
       <CartProvider>
         <AppNavbar />
         <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/products" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<LoginForm />} />
