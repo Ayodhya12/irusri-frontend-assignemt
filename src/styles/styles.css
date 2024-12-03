@@ -1,0 +1,61 @@
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #A3D4A2;
+  --background-color: #f8f9fa;
+  --text-color: #212529;
+  --text-secondary-color: #5a6268;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: "Lato", sans-serif;
+}
+
+/* Button styles */
+.btnPrimary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btnPrimary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.btnSecondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btnSecondary:hover {
+  background-color: #5a6268;
+  border-color: #5a6268;
+}
+
+.secondartText {
+  color: var(--text-secondary-color);
+  font-size: small;
+}
+
+.cardWrapper {
+  transition: transform 0.3s ease-in-out;
+}
+
+.cardWrapper:hover {
+  transform: scale(1.05);
+}
+
+.cardSecondaryWrapper {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.cardSecondaryWrapper:hover {
+  transform: scale(1.05);
+}
